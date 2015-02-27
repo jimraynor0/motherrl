@@ -7,12 +7,5 @@
 	<name>Mother-Roguelike</name>
 	<description>A rogue like attempt</description>
 	<dependencies>
-		<dependency>
-			<groupId>trystan</groupId>
-			<artifactId>ascii-panel</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>${basedir}/lib/asciiPanel.jar</systemPath>
-		</dependency>
 	</dependencies>
 </project>
