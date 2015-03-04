@@ -7,7 +7,7 @@ import external.trystan.asciiPanel.AsciiPanel;
 public class WinScreen implements Screen {
 
     public void displayOutput(AsciiPanel terminal) {
-        terminal.write("You won.", 1, 1);
+        terminal.writeCenter("You won!", 18);
         terminal.writeCenter("-- press [enter] to restart --", 22);
     }
 

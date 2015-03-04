@@ -1,12 +1,12 @@
 package org.toj.mother.game;
 
 import org.toj.mother.game.levels.Level;
-import org.toj.mother.game.levels.LevelBuilder;
+import org.toj.mother.game.levels.builder.LevelBuilder;
 import org.toj.mother.game.objects.creatures.player.Player;
 
 public class Game {
-    private static final int LEVEL_WIDTH = 90;
-    private static final int LEVEL_HEIGHT = 31;
+    private static final int LEVEL_WIDTH = 120;
+    private static final int LEVEL_HEIGHT = 80;
 
     private int depth;
     private Level level;
@@ -33,8 +33,8 @@ public class Game {
     }
 
     private void buildLevel() {
-        level = new LevelBuilder(LEVEL_WIDTH, LEVEL_HEIGHT).makeCaves()
-                .buildLevel();
+        LevelBuilder lb = new LevelBuilder(LEVEL_WIDTH, LEVEL_HEIGHT, depth);
+        level = lb.buildLevel();
     }
 
     public void movePlayer(int x, int y) {

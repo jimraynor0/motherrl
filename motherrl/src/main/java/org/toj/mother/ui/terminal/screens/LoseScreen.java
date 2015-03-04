@@ -7,7 +7,7 @@ import external.trystan.asciiPanel.AsciiPanel;
 public class LoseScreen implements Screen {
 
     public void displayOutput(AsciiPanel terminal) {
-        terminal.write("You lost.", 1, 1);
+        terminal.writeCenter("You lost.", 18);
         terminal.writeCenter("-- press [enter] to restart --", 22);
     }
 

@@ -9,8 +9,8 @@ import external.trystan.asciiPanel.AsciiPanel;
 public class StartScreen implements Screen {
 
     public void displayOutput(AsciiPanel terminal) {
-        terminal.write("rl tutorial", 1, 1);
-        terminal.writeCenter("-- press [enter] to start --", 22);
+        terminal.write("mother", 1, 1);
+        terminal.writeCenter("-- press [enter] to start --", 20);
     }
 
     public Screen respondToUserInput(KeyEvent key) {

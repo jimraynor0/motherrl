@@ -10,7 +10,7 @@ import external.trystan.asciiPanel.AsciiPanel;
 public class PlayScreen implements Screen {
 
     private int screenWidth = 80;
-    private int screenHeight = 21;
+    private int screenHeight = 40;
     private Game game;
 
     public PlayScreen(Game game) {
@@ -26,33 +26,6 @@ public class PlayScreen implements Screen {
 
         terminal.writeCenter("-- press [escape] to lose or [enter] to win --",
                 22);
-    }
-
-    public Screen respondToUserInput(KeyEvent key) {
-        switch (key.getKeyCode()) {
-        case KeyEvent.VK_LEFT:
-            movePlayer(-1, 0);
-            break;
-        case KeyEvent.VK_RIGHT:
-            movePlayer(1, 0);
-            break;
-        case KeyEvent.VK_UP:
-            movePlayer(0, -1);
-            break;
-        case KeyEvent.VK_DOWN:
-            movePlayer(0, 1);
-            break;
-        case KeyEvent.VK_ESCAPE:
-            return new LoseScreen();
-        case KeyEvent.VK_ENTER:
-            return new WinScreen();
-        }
-
-        return this;
-    }
-
-    private void movePlayer(int x, int y) {
-        game.movePlayer(x, y);
     }
 
     private void displayTiles(AsciiPanel terminal, int left, int top) {
@@ -81,5 +54,32 @@ public class PlayScreen implements Screen {
                 0,
                 Math.min(game.getPlayer().getPosY() - screenHeight / 2, game
                         .getLevel().getHeight() - screenHeight));
+    }
+
+    public Screen respondToUserInput(KeyEvent key) {
+        switch (key.getKeyCode()) {
+        case KeyEvent.VK_LEFT:
+            movePlayer(-1, 0);
+            break;
+        case KeyEvent.VK_RIGHT:
+            movePlayer(1, 0);
+            break;
+        case KeyEvent.VK_UP:
+            movePlayer(0, -1);
+            break;
+        case KeyEvent.VK_DOWN:
+            movePlayer(0, 1);
+            break;
+        case KeyEvent.VK_ESCAPE:
+            return new LoseScreen();
+        case KeyEvent.VK_ENTER:
+            return new WinScreen();
+        }
+
+        return this;
+    }
+
+    private void movePlayer(int x, int y) {
+        game.movePlayer(x, y);
     }
 }
