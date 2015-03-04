@@ -20,7 +20,9 @@ public class PlayScreen implements Screen {
     public void displayOutput(AsciiPanel terminal) {
         int left = getScrollX();
         int top = getScrollY();
-        System.out.println("player position: " + game.getPlayer().getPosX() + " , " + game.getPlayer().getPosY());
+        System.out.println("player position: "
+                + game.getPlayer().getLocation().x + " , "
+                + game.getPlayer().getLocation().y);
         System.out.println("scroll position: " + left + " , " + top);
         displayTiles(terminal, left, top);
 
@@ -39,21 +41,22 @@ public class PlayScreen implements Screen {
                 terminal.write(tile.glyph(), x, y, tile.color());
             }
         }
-        terminal.write(AsciiTile.PLAYER.glyph(), game.getPlayer().getPosX() - left, game.getPlayer().getPosY() - top, AsciiTile.PLAYER.color());
+        terminal.write(AsciiTile.PLAYER.glyph(),
+                game.getPlayer().getLocation().x - left, game.getPlayer()
+                        .getLocation().y - top, AsciiTile.PLAYER.color());
     }
 
     public int getScrollX() {
-        return Math.max(
-                0,
-                Math.min(game.getPlayer().getPosX() - screenWidth / 2, game
-                        .getLevel().getWidth() - screenWidth));
+        return Math.max(0, Math.min(game.getPlayer().getLocation().x
+                - screenWidth / 2, game.getLevel().getWidth() - screenWidth));
     }
 
     public int getScrollY() {
-        return Math.max(
-                0,
-                Math.min(game.getPlayer().getPosY() - screenHeight / 2, game
-                        .getLevel().getHeight() - screenHeight));
+        return Math
+                .max(0,
+                        Math.min(game.getPlayer().getLocation().y
+                                - screenHeight / 2, game.getLevel().getHeight()
+                                - screenHeight));
     }
 
     public Screen respondToUserInput(KeyEvent key) {

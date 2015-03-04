@@ -2,6 +2,7 @@ package org.toj.mother.game.levels.builder;
 
 import org.toj.mother.game.levels.Level;
 import org.toj.mother.game.levels.LevelMap;
+import org.toj.mother.game.objects.terrain.Tile;
 
 public class LevelBuilder {
     private int width;
@@ -18,6 +19,7 @@ public class LevelBuilder {
     public Level buildLevel() {
         map = new CellularAutomatonCaveBuilder().generateMap(width, height,
                 depth);
+        map.setTerrain(map.getRandomEmptySpace(), Tile.EXIT);
         return new Level(map);
     }
 }

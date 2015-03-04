@@ -13,6 +13,18 @@ public class Level {
         return map.getTerrain(new Location(x, y));
     }
 
+    public Tile getTerrainAt(Location location) {
+        return map.getTerrain(location);
+    }
+
+    public void setTerrain(int x, int y, Tile tile) {
+        map.setTerrain(new Location(x, y), tile);
+    }
+
+    public Location getRandomEmptySpace() {
+        return map.getRandomEmptySpace();
+    }
+
     public int getWidth() {
         return map.getWidth();
     }

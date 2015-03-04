@@ -34,6 +34,16 @@ public class LevelMap implements Iterable<Location> {
         return location.x < 0 || location.y < 0 || location.x >= width || location.y >= height;
     }
 
+    public Location getRandomEmptySpace() {
+        int x = (int) (Math.random() * width);
+        int y = (int) (Math.random() * height);
+        while (tiles[x][y].impassible()) {
+            x = (int) (Math.random() * width);
+            y = (int) (Math.random() * height);
+        }
+        return new Location(x, y);
+    }
+
     public int getWidth() {
         return width;
     }

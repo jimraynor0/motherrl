@@ -12,6 +12,19 @@ public class Location {
         this.y = y;
     }
 
+    public List<Location> getNeighbours4() {
+        List<Location> results = new ArrayList<Location>(4);
+        results.add(new Location(x - 1, y));
+        results.add(new Location(x + 1, y));
+        results.add(new Location(x, y - 1));
+        results.add(new Location(x, y + 1));
+        return results;
+    }
+
+    public Location move(int mx, int my) {
+        return new Location(x + mx, y + my);
+    }
+
     @Override
     public String toString() {
         return x + ", " + y;
@@ -40,14 +53,5 @@ public class Location {
         if (y != other.y)
             return false;
         return true;
-    }
-
-    public List<Location> getNeighbours4() {
-        List<Location> results = new ArrayList<Location>(4);
-        results.add(new Location(x - 1, y));
-        results.add(new Location(x + 1, y));
-        results.add(new Location(x, y - 1));
-        results.add(new Location(x, y + 1));
-        return results;
     }
 }
