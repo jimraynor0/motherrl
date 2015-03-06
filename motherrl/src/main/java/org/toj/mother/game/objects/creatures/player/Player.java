@@ -5,6 +5,10 @@ import org.toj.mother.game.levels.Location;
 
 public class Player extends Creature {
 
+    public Player(Game game) {
+        super(game);
+    }
+
     public Player(Location location, Game game) {
         super(location, game);
     }

@@ -4,48 +4,59 @@ import org.toj.mother.game.levels.Level;
 import org.toj.mother.game.levels.Location;
 import org.toj.mother.game.levels.builder.LevelBuilder;
 import org.toj.mother.game.objects.creatures.player.Player;
+import org.toj.mother.game.objects.terrain.Tile;
 
 public class Game {
-    private static final int LEVEL_WIDTH = 120;
-    private static final int LEVEL_HEIGHT = 80;
+	private static final int LEVEL_WIDTH = 120;
+	private static final int LEVEL_HEIGHT = 80;
 
-    private int depth;
-    private Level level;
-    private Player player;
+	private int depth;
+	private Level level;
+	private Player player;
 
-    public Game() {
-        enterLevel(1);
-        spawnPlayer();
-    }
+	public Game() {
+		enterLevel(1);
+	}
 
-    private void spawnPlayer() {
-        Location spawnPoint = level.getRandomEmptySpace();
-        player = new Player(spawnPoint, this);
-    }
+	private void placePlayer() {
+		Location startingPoint = level.getRandomEmptySpace();
+		if (player == null) {
+			player = new Player(startingPoint, this);
+		} else {
+			player.setLocation(startingPoint);
+		}
+	}
 
-    private void enterLevel(int depth) {
-        this.depth = depth;
-        buildLevel();
-    }
+	private void enterLevel(int depth) {
+		this.depth = depth;
+		buildLevel();
+		placePlayer();
+	}
 
-    private void buildLevel() {
-        LevelBuilder lb = new LevelBuilder(LEVEL_WIDTH, LEVEL_HEIGHT, depth);
-        level = lb.buildLevel();
-    }
+	private void buildLevel() {
+		LevelBuilder lb = new LevelBuilder(LEVEL_WIDTH, LEVEL_HEIGHT, depth);
+		level = lb.buildLevel();
+	}
 
-    public void movePlayer(int x, int y) {
-        player.move(x, y);
-    }
+	public void movePlayer(int x, int y) {
+		player.move(x, y);
+	}
 
-    public int getDepth() {
-        return depth;
-    }
+	public void descendPlayer() {
+		if (Tile.EXIT.equals(level.getTerrainAt(player.getLocation()))) {
+			enterLevel(getDepth() + 1);
+		}
+	}
 
-    public Level getLevel() {
-        return level;
-    }
+	public int getDepth() {
+		return depth;
+	}
 
-    public Player getPlayer() {
-        return player;
-    }
+	public Level getLevel() {
+		return level;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
 }

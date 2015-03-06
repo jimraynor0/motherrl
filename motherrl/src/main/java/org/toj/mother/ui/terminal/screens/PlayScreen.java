@@ -78,6 +78,10 @@ public class PlayScreen implements Screen {
         case KeyEvent.VK_ENTER:
             return new WinScreen();
         }
+        switch (key.getKeyChar()) {
+        case '<':
+        	game.descendPlayer();
+        }
 
         return this;
     }

@@ -7,6 +7,10 @@ public abstract class Creature {
     private Location location;
     private Game game;
 
+    public Creature(Game game) {
+        this.game = game;
+    }
+
     public Creature(Location l, Game game) {
         this.location = l;
         this.game = game;
@@ -22,4 +26,8 @@ public abstract class Creature {
     public Location getLocation() {
         return location;
     }
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
 }
