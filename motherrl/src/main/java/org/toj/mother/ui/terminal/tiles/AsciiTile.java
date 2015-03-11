@@ -9,7 +9,7 @@ import external.trystan.asciiPanel.AsciiPanel;
 public enum AsciiTile {
     FLOOR('.', AsciiPanel.yellow), WALL('#', AsciiPanel.yellow), BOUNDS('x',
             AsciiPanel.brightBlack), PLAYER('@', AsciiPanel.brightWhite), EXIT(
-            '<', AsciiPanel.brightMagenta);
+            '<', AsciiPanel.brightMagenta), FUNGUS('f', AsciiPanel.green);
 
     private char glyph;
 

@@ -3,26 +3,26 @@ package org.toj.mother.game.levels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Location {
+public class Coordinates {
     public int x;
     public int y;
 
-    public Location(int x, int y) {
+    public Coordinates(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public List<Location> getNeighbours4() {
-        List<Location> results = new ArrayList<Location>(4);
-        results.add(new Location(x - 1, y));
-        results.add(new Location(x + 1, y));
-        results.add(new Location(x, y - 1));
-        results.add(new Location(x, y + 1));
+    public List<Coordinates> getNeighbours4() {
+        List<Coordinates> results = new ArrayList<Coordinates>(4);
+        results.add(new Coordinates(x - 1, y));
+        results.add(new Coordinates(x + 1, y));
+        results.add(new Coordinates(x, y - 1));
+        results.add(new Coordinates(x, y + 1));
         return results;
     }
 
-    public Location move(int mx, int my) {
-        return new Location(x + mx, y + my);
+    public Coordinates move(int mx, int my) {
+        return new Coordinates(x + mx, y + my);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Location {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Location other = (Location) obj;
+        Coordinates other = (Coordinates) obj;
         if (x != other.x)
             return false;
         if (y != other.y)

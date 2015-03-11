@@ -3,6 +3,8 @@ package org.toj.mother.ui.terminal.screens;
 import java.awt.event.KeyEvent;
 
 import org.toj.mother.game.Game;
+import org.toj.mother.game.objects.creatures.monsters.Monster;
+import org.toj.mother.ui.terminal.glyphs.GlyphFactory;
 import org.toj.mother.ui.terminal.tiles.AsciiTile;
 
 import external.trystan.asciiPanel.AsciiPanel;
@@ -20,14 +22,10 @@ public class PlayScreen implements Screen {
     public void displayOutput(AsciiPanel terminal) {
         int left = getScrollX();
         int top = getScrollY();
-        System.out.println("player position: "
-                + game.getPlayer().getLocation().x + " , "
-                + game.getPlayer().getLocation().y);
-        System.out.println("scroll position: " + left + " , " + top);
         displayTiles(terminal, left, top);
 
-        terminal.writeCenter("-- press [escape] to lose or [enter] to win --",
-                22);
+        terminal.write("press [enter] to win", 82, 37);
+        terminal.write("press [escape] to lose", 82, 38);
     }
 
     private void displayTiles(AsciiPanel terminal, int left, int top) {
@@ -41,20 +39,25 @@ public class PlayScreen implements Screen {
                 terminal.write(tile.glyph(), x, y, tile.color());
             }
         }
-        terminal.write(AsciiTile.PLAYER.glyph(),
-                game.getPlayer().getLocation().x - left, game.getPlayer()
-                        .getLocation().y - top, AsciiTile.PLAYER.color());
+        for (Monster m : game.getLevel().getMonsters()) {
+            terminal.write(GlyphFactory.glyph(m).glyph(), m
+                    .getCoordinates().x - left, m.getCoordinates().y
+                    - top, GlyphFactory.glyph(m).color());
+        }
+        terminal.write(AsciiTile.PLAYER.glyph(), game.getPlayer()
+                .getCoordinates().x - left, game.getPlayer().getCoordinates().y
+                - top, AsciiTile.PLAYER.color());
     }
 
     public int getScrollX() {
-        return Math.max(0, Math.min(game.getPlayer().getLocation().x
+        return Math.max(0, Math.min(game.getPlayer().getCoordinates().x
                 - screenWidth / 2, game.getLevel().getWidth() - screenWidth));
     }
 
     public int getScrollY() {
         return Math
                 .max(0,
-                        Math.min(game.getPlayer().getLocation().y
+                        Math.min(game.getPlayer().getCoordinates().y
                                 - screenHeight / 2, game.getLevel().getHeight()
                                 - screenHeight));
     }
@@ -80,7 +83,7 @@ public class PlayScreen implements Screen {
         }
         switch (key.getKeyChar()) {
         case '<':
-        	game.descendPlayer();
+            game.descendPlayer();
         }
 
         return this;

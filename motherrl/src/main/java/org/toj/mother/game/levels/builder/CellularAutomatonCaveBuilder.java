@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.toj.mother.game.levels.LevelMap;
-import org.toj.mother.game.levels.Location;
+import org.toj.mother.game.levels.Coordinates;
 import org.toj.mother.game.objects.terrain.Tile;
 
 class CellularAutomatonCaveBuilder implements MapBuilder {
@@ -26,12 +26,12 @@ class CellularAutomatonCaveBuilder implements MapBuilder {
     }
 
     private void fillIsolatedCaves() {
-        List<Set<Location>> caves = new ArrayList<Set<Location>>();
-        for (Location lc : map) {
+        List<Set<Coordinates>> caves = new ArrayList<Set<Coordinates>>();
+        for (Coordinates lc : map) {
             Tile tile = map.getTerrain(lc);
             if (!tile.impassible()) {
                 boolean newCave = true;
-                for (Set<Location> cave : caves) {
+                for (Set<Coordinates> cave : caves) {
                     if (cave.contains(lc)) {
                         newCave = false;
                         break;
@@ -44,38 +44,38 @@ class CellularAutomatonCaveBuilder implements MapBuilder {
         }
 
         if (caves.size() > 1) {
-            Collections.sort(caves, new Comparator<Set<Location>>() {
-                public int compare(Set<Location> o1, Set<Location> o2) {
+            Collections.sort(caves, new Comparator<Set<Coordinates>>() {
+                public int compare(Set<Coordinates> o1, Set<Coordinates> o2) {
                     return o2.size() - o1.size();
                 }
             });
             caves.remove(0);
-            for (Set<Location> cave : caves) {
-                for (Location location : cave) {
-                    map.setTerrain(location, Tile.WALL);
+            for (Set<Coordinates> cave : caves) {
+                for (Coordinates c : cave) {
+                    map.setTerrain(c, Tile.WALL);
                 }
             }
         }
     }
 
-    private Set<Location> floodCave(Location l) {
-        HashSet<Location> cave = new HashSet<Location>();
-        includeLocation(l, cave);
+    private Set<Coordinates> floodCave(Coordinates c) {
+        HashSet<Coordinates> cave = new HashSet<Coordinates>();
+        includeCoordinates(c, cave);
         return cave;
     }
 
-    private void includeLocation(Location l, HashSet<Location> cave) {
-        if (map.getTerrain(l).impassible()) {
+    private void includeCoordinates(Coordinates c, HashSet<Coordinates> cave) {
+        if (map.getTerrain(c).impassible()) {
             return;
         }
 
-        if (cave.contains(l)) {
+        if (cave.contains(c)) {
             return;
         }
 
-        cave.add(l);
-        for (Location neighbour : l.getNeighbours4()) {
-            includeLocation(neighbour, cave);
+        cave.add(c);
+        for (Coordinates neighbour : c.getNeighbours4()) {
+            includeCoordinates(neighbour, cave);
         }
     }
 
@@ -85,7 +85,7 @@ class CellularAutomatonCaveBuilder implements MapBuilder {
     }
 
     private void randomizeTiles() {
-        for (Location l : map) {
+        for (Coordinates l : map) {
             map.setTerrain(l, Math.random() < 0.55 ? Tile.FLOOR : Tile.WALL);
         }
     }
@@ -97,7 +97,7 @@ class CellularAutomatonCaveBuilder implements MapBuilder {
                 for (int y = 0; y < map.getHeight(); y++) {
                     int wallsInOneStep = wallCountWithinSteps(x, y, 1);
 
-                    nextIterate.setTerrain(new Location(x, y),
+                    nextIterate.setTerrain(new Coordinates(x, y),
                             wallsInOneStep >= 5 ? Tile.WALL : Tile.FLOOR);
                 }
             }
@@ -109,9 +109,9 @@ class CellularAutomatonCaveBuilder implements MapBuilder {
         int tileCount = 0;
         for (int ox = 0 - steps; ox < 1 + steps; ox++) {
             for (int oy = 0 - steps; oy < 1 + steps; oy++) {
-                if (map.outOfBounds(new Location(x + ox, y + oy))) {
+                if (map.outOfBounds(new Coordinates(x + ox, y + oy))) {
                     tileCount++;
-                } else if (map.getTerrain(new Location(x + ox, y + oy)) == Tile.WALL) {
+                } else if (map.getTerrain(new Coordinates(x + ox, y + oy)) == Tile.WALL) {
                     tileCount++;
                 }
             }

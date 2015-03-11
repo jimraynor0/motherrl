@@ -1,7 +1,7 @@
 package org.toj.mother.game;
 
 import org.toj.mother.game.levels.Level;
-import org.toj.mother.game.levels.Location;
+import org.toj.mother.game.levels.Coordinates;
 import org.toj.mother.game.levels.builder.LevelBuilder;
 import org.toj.mother.game.objects.creatures.player.Player;
 import org.toj.mother.game.objects.terrain.Tile;
@@ -19,11 +19,11 @@ public class Game {
 	}
 
 	private void placePlayer() {
-		Location startingPoint = level.getRandomEmptySpace();
+		Coordinates startingPoint = level.getRandomEmptySpace();
 		if (player == null) {
 			player = new Player(startingPoint, this);
 		} else {
-			player.setLocation(startingPoint);
+			player.setCoordinates(startingPoint);
 		}
 	}
 
@@ -34,7 +34,7 @@ public class Game {
 	}
 
 	private void buildLevel() {
-		LevelBuilder lb = new LevelBuilder(LEVEL_WIDTH, LEVEL_HEIGHT, depth);
+		LevelBuilder lb = new LevelBuilder(LEVEL_WIDTH, LEVEL_HEIGHT, depth, this);
 		level = lb.buildLevel();
 	}
 
@@ -43,7 +43,7 @@ public class Game {
 	}
 
 	public void descendPlayer() {
-		if (Tile.EXIT.equals(level.getTerrainAt(player.getLocation()))) {
+		if (Tile.EXIT.equals(level.getTerrainAt(player.getCoordinates()))) {
 			enterLevel(getDepth() + 1);
 		}
 	}

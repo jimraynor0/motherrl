@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.toj.mother.game.objects.terrain.Tile;
 
-public class LevelMap implements Iterable<Location> {
+public class LevelMap implements Iterable<Coordinates> {
     private int width;
     private int height;
     private Tile[][] tiles;
@@ -17,31 +17,31 @@ public class LevelMap implements Iterable<Location> {
         this.tiles = new Tile[width][height];
     }
 
-    public Tile getTerrain(Location location) {
-        if (outOfBounds(location)) {
+    public Tile getTerrain(Coordinates c) {
+        if (outOfBounds(c)) {
             return Tile.BOUNDS;
         }
-        return tiles[location.x][location.y];
+        return tiles[c.x][c.y];
     }
 
-    public void setTerrain(Location location, Tile tile) {
-        if (!outOfBounds(location)) {
-            tiles[location.x][location.y] = tile;
+    public void setTerrain(Coordinates c, Tile tile) {
+        if (!outOfBounds(c)) {
+            tiles[c.x][c.y] = tile;
         }
     }
 
-    public boolean outOfBounds(Location location) {
-        return location.x < 0 || location.y < 0 || location.x >= width || location.y >= height;
+    public boolean outOfBounds(Coordinates c) {
+        return c.x < 0 || c.y < 0 || c.x >= width || c.y >= height;
     }
 
-    public Location getRandomEmptySpace() {
+    public Coordinates getRandomEmptySpace() {
         int x = (int) (Math.random() * width);
         int y = (int) (Math.random() * height);
         while (tiles[x][y].impassible()) {
             x = (int) (Math.random() * width);
             y = (int) (Math.random() * height);
         }
-        return new Location(x, y);
+        return new Coordinates(x, y);
     }
 
     public int getWidth() {
@@ -68,13 +68,13 @@ public class LevelMap implements Iterable<Location> {
         this.tiles = tiles;
     }
 
-    public Iterator<Location> iterator() {
-        List<Location> allLocation = new ArrayList<Location>(width * height);
+    public Iterator<Coordinates> iterator() {
+        List<Coordinates> allCoordinates = new ArrayList<Coordinates>(width * height);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                allLocation.add(new Location(x, y));
+                allCoordinates.add(new Coordinates(x, y));
             }
         }
-        return allLocation.iterator();
+        return allCoordinates.iterator();
     }
 }
